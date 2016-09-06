@@ -90,7 +90,7 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
             linearlayout_userinfo_personal_column.setOrientation(LinearLayout.HORIZONTAL);
             this.addView(linearlayout_userinfo_personal_column);
 
-            perphotoWidth = scrollViewHeight;  //每张照片的宽度等于列高
+            perphotoWidth = scrollViewHeight * 16 / 9;  //每张照片的宽度等于列高
             loadOnce = true;
             //加载下一页图片
             loadMoreImages();
