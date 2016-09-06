@@ -372,7 +372,7 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
                 imageView.setLayoutParams(params);
                 imageView.setImageBitmap(bitmap);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                //imageView.setPadding(5, 5, 5, 5);
+                imageView.setPadding(5, 5, 5, 5);
                 imageView.setTag(R.string.image_url, mImageUrl);
 
                 //这里应该计算图片当前的位置
