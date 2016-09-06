@@ -1,20 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_main"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pfc.namibiaroadtrip.MainActivity">
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:background="#f4f4f4">
 
     <!-- MapView -->
     <com.esri.android.map.MapView
         android:id="@+id/map"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         mapoptions.MapType="Topo"
         mapoptions.center="34.056215, -117.195668"
         mapoptions.ZoomLevel="16"/>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:orientation="vertical"
 
-</android.support.constraint.ConstraintLayout>
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="text1"
+        android:textSize="30sp"
+        android:textColor="#fff"
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="text2"
+            android:textSize="15sp"
+            android:textColor="#fff"
+            />
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_Picture_Show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/myHorizotalScrollView"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        />
+    <com.pfc.namibiaroadtrip.MyHorizotalScrollView
+        android:id="@+id/myHorizotalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_footer_height"
+        android:minHeight="@dimen/activity_footer_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        />
+</RelativeLayout>
+
+</FrameLayout>
