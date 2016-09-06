@@ -1,18 +1,3 @@
-/* Copyright 2015 Esri
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
 
 package com.pfc.namibiaroadtrip;
 
@@ -53,8 +38,13 @@ import com.esri.core.tasks.query.QueryTask;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Created by pfc on 2016/9/4.
+ */
 
 public class MainActivity extends Activity {
+
+    private MyHorizotalScrollView myHorizotalScrollView;
 
     private MapView mMapView;
     private ArcGISFeatureLayer mFeatureLayer;
@@ -78,9 +68,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int width=getWindowManager().getDefaultDisplay().getWidth();
+
 
         // Retrieve the map and initial extent from XML layout
         mMapView = (MapView) findViewById(R.id.map);
+        myHorizotalScrollView = (MyHorizotalScrollView)findViewById(R.id.myHorizotalScrollView);
+
         // Get the feature service URL from values->strings.xml
         mFeatureServiceLayerURL = this.getResources().getString(R.string.featureServiceLayerURL);
         mFeatureServiceURL = this.getResources().getString(R.string.featureServiceURL);
@@ -347,12 +341,15 @@ public class MainActivity extends Activity {
 
             // iterate through results
             int index = 0;
+            final String[] imageUrls = new String[(int) results.featureCount()];
             for (Object element : results) {
                 // if object is feature cast to feature
                 if (element instanceof Feature){
+                    Feature feature = (Feature) element;
+                    imageUrls[index] = feature.getAttributeValue("thumb_url").toString();
                     index++;
                     txtSymbol.setText(index+"");
-                    Feature feature = (Feature) element;
+
                     // convert feature to graphic
                     Graphic graphic = new Graphic(feature.getGeometry(), sms, feature.getAttributes());
                     // merge extent with point
@@ -365,6 +362,12 @@ public class MainActivity extends Activity {
                     mGraphicsLayer.addGraphic(gr);
                 }
             }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    myHorizotalScrollView.setImageUrls(imageUrls);
+                }
+            });
 
             // Set the map extent to the envelope containing the result graphics
             mMapView.setExtent(extent, 100);
