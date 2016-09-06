@@ -1,4 +1,4 @@
-package com.pfc.namibiaroadtrip;
+package com.pfc.namibiaroadtrip.old;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,7 +9,7 @@ import android.util.LruCache;
  * 
  * @author Tony
  */
-public class ImageLoader {
+public class ImageLoaderHelper {
 
 	/**
 	 * 图片缓存技术的核心类，用于缓存所有下载好的图片，在程序内存达到设定值时会将最少最近使用的图片移除掉。
@@ -19,11 +19,11 @@ public class ImageLoader {
 	/**
 	 * ImageLoader的实例。
 	 */
-	private static ImageLoader mImageLoader;
+	private static ImageLoaderHelper mImageLoader;
 
     
     
-	private ImageLoader() {
+	private ImageLoaderHelper() {
 		// 获取应用程序最大可用内存
 		int maxMemory = (int) Runtime.getRuntime().maxMemory();
 		int cacheSize = maxMemory / 8;
@@ -41,9 +41,9 @@ public class ImageLoader {
 	 * 
 	 * @return ImageLoader的实例。
 	 */
-	public static ImageLoader getInstance() {
+	public static ImageLoaderHelper getInstance() {
 		if (mImageLoader == null) {
-			mImageLoader = new ImageLoader();
+			mImageLoader = new ImageLoaderHelper();
 		}
 		return mImageLoader;
 	}

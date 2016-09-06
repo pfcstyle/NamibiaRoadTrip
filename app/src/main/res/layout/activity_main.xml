@@ -50,6 +50,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             />
         <com.pfc.namibiaroadtrip.MyHorizotalScrollView
             android:id="@+id/myHorizotalScrollView"
