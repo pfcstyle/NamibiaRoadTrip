@@ -48,10 +48,10 @@ public class MainActivity extends Activity {
     private MyHorizotalScrollView myHorizotalScrollView;
 
     private MapView mMapView;
-    private ArcGISFeatureLayer mFeatureLayer;
+    private FeatureLayer mFeatureLayer;
     private GraphicsLayer mGraphicsLayer;
     private Callout mCallout;
-    private Graphic mIdentifiedGraphic;
+    private Feature mIdentifiedFeature;
 
     private ViewGroup mCalloutContent;
     private boolean mIsMapLoaded;
@@ -77,28 +77,11 @@ public class MainActivity extends Activity {
         myHorizotalScrollView = (MyHorizotalScrollView)findViewById(R.id.myHorizotalScrollView);
 
         // Get the feature service URL from values->strings.xml
-        mFeatureServiceLayerURL = this.getResources().getString(R.string.featureServiceLayerURL);
         mFeatureServiceURL = this.getResources().getString(R.string.featureServiceURL);
-        ArcGISFeatureLayer.Options options = new ArcGISFeatureLayer.Options();
-        options.outFields = new String[]{"objectid","name","description","icon_color","pic_url","thumb_url"};
-        options.mode = ArcGISFeatureLayer.MODE.ONDEMAND;
-        // Add Feature layer to the MapView
-        mFeatureLayer = new ArcGISFeatureLayer(mFeatureServiceLayerURL, options);
-        mMapView.addLayer(mFeatureLayer);
-        // Add Graphics layer to the MapView
-        mGraphicsLayer = new GraphicsLayer();
-        mMapView.addLayer(mGraphicsLayer);
 
         // Set the Esri logo to be visible, and enable map to wrap around date line.
         mMapView.setEsriLogoVisible(true);
         mMapView.enableWrapAround(true);
-
-        LayoutInflater inflater = getLayoutInflater();
-        mCallout = mMapView.getCallout();
-        // Get the layout for the Callout from
-        // layout->identify_callout_content.xml
-        mCalloutContent = (ViewGroup) inflater.inflate(R.layout.identify_callout_content, null);
-        mCallout.setContent(mCalloutContent);
 
         mMapView.setOnStatusChangedListener(new OnStatusChangedListener() {
 
@@ -116,6 +99,24 @@ public class MainActivity extends Activity {
                         @Override
                         public void onCallback(GeodatabaseFeatureServiceTable.Status status) {
                             if (status == GeodatabaseFeatureServiceTable.Status.INITIALIZED) {
+                                mFeatureLayer = new FeatureLayer(mFeatureServiceTable);
+                                mFeatureLayer.setVisible(true);
+                                // emphasize the selected features by increasing the selection halo size and color
+                                mFeatureLayer.setSelectionColor(Color.GRAY);
+                                mFeatureLayer.setSelectionColorWidth(20);
+                                // add feature layer to map
+                                mMapView.addLayer(mFeatureLayer);
+                                // Add Graphics layer to the MapView
+                                mGraphicsLayer = new GraphicsLayer();
+                                mMapView.addLayer(mGraphicsLayer);
+
+                                LayoutInflater inflater = getLayoutInflater();
+                                mCallout = mMapView.getCallout();
+                                // Get the layout for the Callout from
+                                // layout->identify_callout_content.xml
+                                mCalloutContent = (ViewGroup) inflater.inflate(R.layout.identify_callout_content, null);
+                                mCallout.setContent(mCalloutContent);
+
                                 // create a FeatureLayer from teh initialized GeodatabaseFeatureServiceTable
                                 System.out.println("1234567890+++++++++++");
                                 runOnUiThread(
@@ -177,10 +178,10 @@ public class MainActivity extends Activity {
 
         // If the user tapped on a feature, then display information regarding
         // the feature in the callout
-        if (mIdentifiedGraphic != null) {
+        if (mIdentifiedFeature != null) {
             Point mapPoint = mMapView.toMapPoint(x, y);
             // Show Callout
-            showCallout(mCallout, mIdentifiedGraphic, mapPoint);
+            showCallout(mCallout, mIdentifiedFeature, mapPoint);
         }
     }
 
@@ -203,10 +204,10 @@ public class MainActivity extends Activity {
                 if (layer == null)
                     continue;
 
-                if (layer instanceof ArcGISFeatureLayer) {
-                    ArcGISFeatureLayer fLayer = (ArcGISFeatureLayer) layer;
+                if (layer instanceof FeatureLayer) {
+                    FeatureLayer fLayer = (FeatureLayer) layer;
                     // Get the Graphic at location x,y
-                    mIdentifiedGraphic = getFeature(fLayer, x, y);
+                    mIdentifiedFeature =  getFeature(fLayer, x, y);
                 }
             }
         }
@@ -223,27 +224,27 @@ public class MainActivity extends Activity {
      *          y co-ordinate of point
      * @return Graphic at location x,y
      */
-    private Graphic getFeature(ArcGISFeatureLayer fLayer, float x, float y) {
+    private Feature getFeature(FeatureLayer fLayer, float x, float y) {
 
         // Get the graphics near the Point.
-        int[] ids = fLayer.getGraphicIDs(x, y, 10, 1);
+        long[] ids = fLayer.getFeatureIDs(x, y, 10, 1);
         if (ids == null || ids.length == 0) {
             return null;
         }
-        return fLayer.getGraphic(ids[0]);
+        return fLayer.getFeature(ids[0]);
     }
 
     /**
      * Shows the Attribute values for the Graphic in the Callout
      *
      * @param calloutView a callout to show
-     * @param graphic selected graphic
+     * @param feature selected graphic
      * @param mapPoint point to show callout
      */
-    private void showCallout(Callout calloutView, Graphic graphic, Point mapPoint) {
+    private void showCallout(Callout calloutView, Feature feature, Point mapPoint) {
 
         // Get the values of attributes for the Graphic
-        String name = (String) graphic.getAttributeValue("name");
+        String name = (String) feature.getAttributeValue("name");
 
         // Set callout properties
         calloutView.setCoordinates(mapPoint);
@@ -275,25 +276,6 @@ public class MainActivity extends Activity {
 
         @Override
         protected FeatureResult doInBackground(String... params) {
-
-//            String whereClause = "objectid >'" + "1" + "'";
-//
-//            // Define a new query and set parameters
-//            QueryParameters mParams = new QueryParameters();
-//            mParams.setWhere(whereClause);
-//            mParams.setReturnGeometry(true);
-//
-//            // Define the new instance of QueryTask
-//            QueryTask queryTask = new QueryTask(mFeatureServiceLayerURL);
-//            FeatureResult results;
-//
-//            try {
-//                // run the querytask
-//                results = queryTask.execute(mParams);
-//                return results;
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
 
             String whereClause;
             System.out.println("params:+++"+params.toString());

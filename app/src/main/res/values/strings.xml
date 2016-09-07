@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Namibia Road Trip</string>
     <string name="featureServiceURL">http://services.arcgis.com/VQIrmwtdi4plr2de/ArcGIS/rest/services/Namibia/FeatureServer</string>
-    <string name="featureServiceLayerURL">http://services.arcgis.com/VQIrmwtdi4plr2de/ArcGIS/rest/services/Namibia/FeatureServer/0</string>
     <string name="name">name</string>
     <string name="image_url">1</string>
     <string name="border_top">2</string>
