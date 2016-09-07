@@ -34,6 +34,7 @@ import com.esri.core.symbol.SimpleMarkerSymbol;
 import com.esri.core.symbol.TextSymbol;
 import com.esri.core.tasks.query.QueryParameters;
 import com.esri.core.tasks.query.QueryTask;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -385,5 +386,11 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         mMapView.unpause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ImageLoader.getInstance().clearMemoryCache();
     }
 }
