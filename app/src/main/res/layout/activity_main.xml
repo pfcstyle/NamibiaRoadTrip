@@ -47,8 +47,8 @@
             android:layout_above="@+id/myHorizotalScrollView"
             android:background="#000"
             android:src="@drawable/ic_ar_list_hot"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             />
         <com.pfc.namibiaroadtrip.MyHorizotalScrollView
