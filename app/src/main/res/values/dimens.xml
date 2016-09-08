@@ -3,5 +3,19 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_header_height">48dp</dimen>
-    <dimen name="activity_footer_height">49dp</dimen>
+    <!-- bigImage -->
+    <dimen name="bigImage_width">120dp</dimen>
+    <dimen name="bigImage_height">120dp</dimen>
+    <!-- MyHorizotalScrollView -->
+    <dimen name="activity_footer_height">70dp</dimen>
+    <!-- MyHorizotalScrollViewItem -->
+    <dimen name="MHS_item_height">60dp</dimen>
+    <dimen name="MHS_item_padding">3dp</dimen>
+    <dimen name="MHS_item_space">5dp</dimen>
+    <dimen name="MHS_item_image_height">43dp</dimen>
+    <dimen name="MHS_item_nameText_height">9dp</dimen>
+    <dimen name="MHS_item_nameText_textSize">4dp</dimen>
+    <dimen name="MHS_item_numberText_height">6dp</dimen>
+    <dimen name="MHS_item_numberText_width">6dp</dimen>
+    <dimen name="MHS_item_numberText_textSize">4dp</dimen>
 </resources>

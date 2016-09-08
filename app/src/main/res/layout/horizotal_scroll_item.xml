@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clear"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/MHS_item_im"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/MHS_item_image_height"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/MHS_item_number_tv"
+                android:layout_width="@dimen/MHS_item_numberText_width"
+                android:layout_height="@dimen/MHS_item_numberText_height"
+                android:textAlignment="center"
+                android:textSize="@dimen/MHS_item_numberText_textSize"
+                android:background="@color/red"
+                android:textColor="@color/white"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="0dp"
+                />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/MHS_item_name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/MHS_item_nameText_height"
+            android:textAlignment="center"
+            android:textSize="@dimen/MHS_item_nameText_height"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+</LinearLayout>

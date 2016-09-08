@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         mapoptions.MapType="Topo"
-        mapoptions.center="34.056215, -117.195668"
-        mapoptions.ZoomLevel="16"/>
+        mapoptions.center="20, 100"
+        mapoptions.ZoomLevel="14"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,14 +27,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="text1"
+                android:text="@string/app_title"
                 android:textSize="30sp"
                 android:textColor="#fff"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="text2"
+                android:text="@string/app_description"
                 android:textSize="15sp"
                 android:textColor="#fff"
                 />
@@ -42,8 +42,8 @@
         </LinearLayout>
         <ImageView
             android:id="@+id/iv_Picture_Show"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/bigImage_width"
+            android:layout_height="@dimen/bigImage_height"
             android:layout_above="@+id/myHorizotalScrollView"
             android:background="#000"
             android:src="@drawable/ic_ar_list_hot"
@@ -53,14 +53,15 @@
             />
         <com.pfc.namibiaroadtrip.MyHorizotalScrollView
             android:id="@+id/myHorizotalScrollView"
+            android:scrollbars="none"
             android:layout_width="match_parent"
             android:layout_height="@dimen/activity_footer_height"
             android:minHeight="@dimen/activity_footer_height"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:background="@color/white"
+            android:background="@color/scrollBgColor"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
+
             />
     </RelativeLayout>
 
