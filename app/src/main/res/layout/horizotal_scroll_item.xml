@@ -11,14 +11,16 @@
         android:orientation="vertical">
 
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
 
             <ImageView
                 android:id="@+id/MHS_item_im"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/MHS_item_image_height"
-                android:layout_gravity="center" />
+                android:adjustViewBounds="true" >
+                </ImageView>
 
             <TextView
                 android:id="@+id/MHS_item_number_tv"
@@ -28,7 +30,7 @@
                 android:textSize="@dimen/MHS_item_numberText_textSize"
                 android:background="@color/red"
                 android:textColor="@color/white"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginTop="0dp"
                 />
         </FrameLayout>
@@ -38,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/MHS_item_nameText_height"
             android:textAlignment="center"
-            android:textSize="@dimen/MHS_item_nameText_height"
+            android:textSize="@dimen/MHS_item_nameText_textSize"
             android:textColor="@color/black"/>
 
     </LinearLayout>
