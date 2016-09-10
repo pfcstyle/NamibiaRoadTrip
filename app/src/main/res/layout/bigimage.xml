@@ -12,12 +12,6 @@
         android:src="@drawable/loading"
         android:layout_marginEnd="0dp"
         />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </RelativeLayout>
     <!--nameText相关-->
     <Button
         android:id="@+id/show_text_btn"
@@ -54,23 +48,27 @@
         android:textAlignment="center"
         android:gravity="center|center_vertical"
         android:background="@color/alphaBlack"
-        android:layout_gravity="top"
-        android:layout_marginStart="@dimen/bigImage_arrowBtn_marginLR"
-        android:layout_marginTop="@dimen/bigImage_arrowBtn_marginTop"
-        android:visibility="invisible"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/bigImage_leftArrowBtn_margin"
         />
-    <Button
-        android:id="@+id/rightArrow_btn"
-        android:layout_width="@dimen/bigImage_arrowBtn_width"
-        android:layout_height="@dimen/bigImage_arrowBtn_height"
-        android:text="@string/right_arrow"
-        android:textColor="@color/white"
-        android:gravity="center|center_vertical"
-        android:textAlignment="center"
-        android:textSize="@dimen/bigImage_arrowBtn_textSize"
-        android:background="@color/alphaBlack"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:layout_marginEnd="@dimen/bigImage_arrowBtn_marginLR"
-        android:layout_marginTop="@dimen/bigImage_arrowBtn_marginTop"
-        />
+        android:layout_marginEnd="@dimen/bigImage_rightArrowBtn_margin">
+        <Button
+            android:id="@+id/rightArrow_btn"
+            android:layout_width="@dimen/bigImage_arrowBtn_width"
+            android:layout_height="@dimen/bigImage_arrowBtn_height"
+            android:text="@string/right_arrow"
+            android:textColor="@color/white"
+            android:gravity="center|center_vertical"
+            android:textAlignment="center"
+            android:textSize="@dimen/bigImage_arrowBtn_textSize"
+            android:background="@color/alphaBlack"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+
 </FrameLayout>
