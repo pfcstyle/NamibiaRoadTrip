@@ -3,6 +3,7 @@ package com.pfc.namibiaroadtrip.utils;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -11,23 +12,37 @@ import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 
 /**
  * Created by pfc on 2016/9/7.
  */
-public class ErisImageLoader {
-    private static ErisImageLoader ourInstance = new ErisImageLoader();
+public class EsriImageLoader {
+    private static EsriImageLoader ourInstance = new EsriImageLoader();
 
-    public static ErisImageLoader getInstance() {
+    public static EsriImageLoader getInstance() {
         return ourInstance;
     }
 
-    private ErisImageLoader() {
+    private EsriImageLoader() {
     }
+
+    public static void setLoadFailedBitmap(Bitmap loadFailedBitmap) {
+        EsriImageLoader.loadFailedBitmap = loadFailedBitmap;
+    }
+
+    public static void setLoadingBitmap(Bitmap loadingBitmap) {
+        EsriImageLoader.loadingBitmap = loadingBitmap;
+    }
+
+    private static Bitmap loadFailedBitmap;
+    private static Bitmap loadingBitmap;
+
     public void init(Context context){
         int memClass = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE))
                 .getMemoryClass();
@@ -58,7 +73,34 @@ public class ErisImageLoader {
                 .defaultDisplayImageOptions(defaultOptions).build();
         ImageLoader.getInstance().init(configuration);
     }
-    public void displayImage(String url,ImageView imageView){
-        ImageLoader.getInstance().displayImage(url, imageView);
+
+    public void displayImage(String url, final ImageView imageView){
+        System.out.println("url++++++++++++:"+url);
+        ImageLoader.getInstance().loadImage(url, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+                if (loadingBitmap != null) {
+                    imageView.setImageBitmap(loadingBitmap);
+                }
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+                if (loadFailedBitmap != null)
+                imageView.setImageBitmap(loadFailedBitmap);
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                System.out.println("图片加载完成");
+                imageView.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
     }
+
 }

@@ -1,4 +1,4 @@
-package com.pfc.namibiaroadtrip;
+package com.pfc.namibiaroadtrip.views;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -14,6 +14,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.pfc.namibiaroadtrip.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,10 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
      * 当前选择的index
      */
     private int selectedIndex;
+    public int getSelectedIndex(){
+        return this.selectedIndex;
+    }
+
     public void setSelectedIndex(int selectedIndex) {
         if ((this.selectedIndex == selectedIndex) || selectedIndex>viewList.size()-1) return;
         View view = viewList.get(this.selectedIndex);
@@ -39,7 +45,7 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
     /**
      * 被选中的颜色
      */
-    private int selectedColor = Color.WHITE;
+    private int selectedColor = Color.rgb(200,254,254);
 
     /**
      * 未被选中的颜色
@@ -112,6 +118,8 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
         if (changed && !loadOnce) {
             scrollViewHeight = getHeight();
             scrollViewWidth = getWidth();
+            int size = (scrollViewWidth - itemSpace) / (itemSpace+itemWidth);
+            pageSize = (scrollViewWidth - itemSpace) % (itemSpace+itemWidth)==0 ? size+1 : size+2;
             if (protocol != null){
                 itemCount = protocol.countForMHS();
             }
@@ -150,7 +158,7 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
      * 默认为4张
      * @param context
      */
-    public int pageSize = 4;
+    public int pageSize;
 
     /**
      * MyScrollView的构造函数。
@@ -180,10 +188,15 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
             System.out.println("itemCount:"+itemCount);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     itemWidth, scrollViewHeight);
+            View itemView = new View(getContext());
+            itemView.setTag(R.string.border_left, ColumnWith);
+            ColumnWith += itemWidth;//增加总宽
+
+            itemView.setTag(R.string.border_right, ColumnWith);
             if (i < itemCount - 1) {
                 params.setMargins(0, 0, itemSpace, 0);
+                ColumnWith += itemSpace;
             }
-            View itemView = new View(getContext());
             itemView.setLayoutParams(params);
             linearlayout_userinfo_personal_column.addView(itemView);
         }
@@ -191,6 +204,9 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
 
 
     private void replaceItem(int index , View view){
+        View placeHolderView = linearlayout_userinfo_personal_column.getChildAt(index);
+        view.setTag(R.string.border_left,placeHolderView.getTag(R.string.border_left));
+        view.setTag(R.string.border_right,placeHolderView.getTag(R.string.border_right));
         linearlayout_userinfo_personal_column.removeViewAt(index);
         linearlayout_userinfo_personal_column.addView(view,index);
     }
@@ -211,7 +227,6 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
      */
     public void myScrollTo(int x, int y) {
         scrollTo(x,y);
-        System.out.println("scrollTo:+");
         Message message = new Message();
         message.obj = this;
         handler.sendMessageDelayed(message, 5);
@@ -221,7 +236,7 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
         if (index + pageSize <= viewList.size()) return;
         if ( viewList.size()<itemCount) {
             int startIndex = viewList.size();  //起始位置
-            int endIndex = index + pageSize+1;    //结束位置
+            int endIndex = index + pageSize;    //结束位置
             if (startIndex < itemCount) {
                 if (endIndex > itemCount) {
                     endIndex = itemCount;
@@ -229,13 +244,9 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
                 for (int i = startIndex; i < endIndex; i++) {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             itemWidth, scrollViewHeight);
-                    if (i < itemCount - 1) {
-                        params.setMargins(0, 0, itemSpace, 0);
-                    }
+
                     View itemView = protocol.getMHSItemForIndex(i);
                     itemView.setTag(R.string.item_index,i);
-
-                    itemView.setLayoutParams(params);
                     final int viewIndex = i;
                     itemView.setOnClickListener(new OnClickListener() {
                         @Override
@@ -254,10 +265,10 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
                         }
                     });
                     itemView.setPadding(0, itemTBMargin,0, itemTBMargin);
-                    //这里应该计算图片当前的位置
-                    itemView.setTag(R.string.border_left, ColumnWith);
-                    ColumnWith += itemWidth;//增加总宽
-                    itemView.setTag(R.string.border_right, ColumnWith);
+                    if (i < itemCount - 1) {
+                        params.setMargins(0, 0, itemSpace, 0);
+                    }
+                    itemView.setLayoutParams(params);
                     replaceItem(i,itemView);
                     viewList.add(itemView);
                 }
@@ -352,11 +363,7 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
         loadDataToIndex(viewList.size());
     }
 
-    public int dpToPx(Resources res, int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, res.getDisplayMetrics());
-    }
-
-    interface MyHorizotalScrollViewProtocol{
+    public interface MyHorizotalScrollViewProtocol{
         public View getMHSItemForIndex(int index);
         public void MHSItemDidSelectedForIndex(int index);
         public void MHSItemDidUnselectedForIndex(int index);

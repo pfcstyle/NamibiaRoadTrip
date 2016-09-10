@@ -9,4 +9,6 @@
     <color name="clear">#00000000</color>
     <color name="red">#FF0000</color>
     <color name="scrollBgColor">#90FFFFFF</color>
+
+    <color name="alphaBlack">#90000000</color>
 </resources>

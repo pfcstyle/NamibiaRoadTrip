@@ -6,7 +6,19 @@
     <string name="featureServiceURL">http://services.arcgis.com/VQIrmwtdi4plr2de/ArcGIS/rest/services/Namibia/FeatureServer</string>
     <string name="name">name</string>
 
+    <string name="config.data.sdcard.offline.dir">ArcGIS/Namibia/CRGdb</string>
+    <string name="config.geodatabase.name">namibia</string>
+    <string name="config.local.basemap">Namibia.tpk</string>
+
     <string name="border_left">2</string>
     <string name="border_right">3</string>
     <string name="item_index">4</string>
+    <string name="bigImageurl">1111</string>
+    <string name="zoomOutStr">-</string>
+    <string name="homeStr">合</string>
+    <string name="zoomInStr">+</string>
+    <string name="up_arrow">↑</string>
+    <string name="down_arrow">↓</string>
+    <string name="right_arrow"><![CDATA[>]]></string>
+    <string name="left_arrow"><![CDATA[<]]></string>
 </resources>
