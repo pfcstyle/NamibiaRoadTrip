@@ -215,9 +215,7 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
         if (index > viewList.size() - pageSize){
             loadDataToIndex(index);
         }
-        View view = viewList.get(index);
-        int scrollTox = (Integer) view.getTag(R.string.border_left);
-        myScrollTo(scrollTox,0);
+        myScrollTo(getScrollXFromIndex(index),0);
     }
 
     /**
@@ -307,6 +305,10 @@ public class MyHorizotalScrollView extends HorizontalScrollView implements View.
 
     private int getIndexFromScrollX(int scrollX){
         return (scrollX + itemSpace)/(itemSpace+ itemWidth);
+    }
+
+    private int getScrollXFromIndex(int index){
+        return index*(itemWidth+itemSpace);
     }
 
 

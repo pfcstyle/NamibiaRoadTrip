@@ -435,7 +435,7 @@ public class MainActivity extends Activity implements MyHorizotalScrollView.MyHo
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
 
         ImageView imageView = (ImageView) contentView.findViewById(R.id.popup_image);
-        EsriImageLoader.getInstance().displayImage(bigImageView.getTag(R.string.bigImageurl).toString(),imageView);
+        EsriImageLoader.getInstance().displayImage(bigImageView.getTag(R.string.bigImageurl).toString(),imageView,true);
 
         TextView textView = (TextView)contentView.findViewById(R.id.popup_name_tv);
         textView.setText(bigImageTV.getText());
@@ -867,7 +867,7 @@ public class MainActivity extends Activity implements MyHorizotalScrollView.MyHo
         numberTV.setText((index+1)+"");
 
         ImageView imageView = (ImageView) view.findViewById(R.id.MHS_item_im);
-        EsriImageLoader.getInstance().displayImage(feature.getAttributeValue("thumb_url").toString(), imageView);
+        EsriImageLoader.getInstance().displayImage(feature.getAttributeValue("thumb_url").toString(), imageView,false);
 
         return view;
     }
@@ -879,7 +879,7 @@ public class MainActivity extends Activity implements MyHorizotalScrollView.MyHo
         String big_url = feature.getAttributeValue("pic_url").toString();
         String name = feature.getAttributeValue("name").toString();
         bigImageView.setTag(R.string.bigImageurl,big_url);
-        EsriImageLoader.getInstance().displayImage(big_url,bigImageView);
+        EsriImageLoader.getInstance().displayImage(big_url,bigImageView,true);
         bigImageTV.setText(name);
         //地图的修改
         mMapView.zoomToResolution((Point)feature.getGeometry(),100);

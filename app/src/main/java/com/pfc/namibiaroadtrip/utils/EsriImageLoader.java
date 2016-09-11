@@ -42,6 +42,7 @@ public class EsriImageLoader {
 
     private static Bitmap loadFailedBitmap;
     private static Bitmap loadingBitmap;
+    private static String tagUrl;
 
     public void init(Context context){
         int memClass = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE))
@@ -74,26 +75,43 @@ public class EsriImageLoader {
         ImageLoader.getInstance().init(configuration);
     }
 
-    public void displayImage(String url, final ImageView imageView){
-        System.out.println("url++++++++++++:"+url);
+    /**
+     * 添加static变量  方便判断当只有一个imageview但加载多张图片时，应该显示哪张
+     * @param url
+     * @param imageView
+     * @param isStatic
+     */
+    public void displayImage(String url,ImageView imageView,boolean isStatic){
+        final ImageView im = imageView;
+        final boolean isSta = isStatic;
+        if (isSta){
+            tagUrl = url;
+        }
         ImageLoader.getInstance().loadImage(url, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
                 if (loadingBitmap != null) {
-                    imageView.setImageBitmap(loadingBitmap);
+                    im.setImageBitmap(loadingBitmap);
                 }
             }
 
             @Override
             public void onLoadingFailed(String s, View view, FailReason failReason) {
                 if (loadFailedBitmap != null)
-                imageView.setImageBitmap(loadFailedBitmap);
+                    im.setImageBitmap(loadFailedBitmap);
             }
 
             @Override
             public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                System.out.println("图片加载完成");
-                imageView.setImageBitmap(bitmap);
+                if (isSta){
+                    System.out.println("tagUrl:"+tagUrl);
+                    if (s.equals(tagUrl)){
+                        System.out.println("tagUrl:"+tagUrl);
+                        im.setImageBitmap(bitmap);
+                    }
+                }else {
+                    im.setImageBitmap(bitmap);
+                }
             }
 
             @Override
